@@ -18,6 +18,8 @@ AC_DEFUN([RTEMS_CHECK_BSPDIR],
     AC_CONFIG_SUBDIRS([gdbarmsim]);;
   gumstix )
     AC_CONFIG_SUBDIRS([gumstix]);;
+  jetson-tk1 )
+    AC_CONFIG_SUBDIRS([jetson-tk1]);;
   lm3s69xx )
     AC_CONFIG_SUBDIRS([lm3s69xx]);;
   lpc176x )

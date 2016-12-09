@@ -1,0 +1,43 @@
+AC_PREREQ([2.68])
+AC_INIT([rtems-c-src-lib-libbsp-arm-jetson-tk1],[_RTEMS_VERSION],[https://devel.rtems.org/newticket])
+AC_CONFIG_SRCDIR([bsp_specs])
+RTEMS_TOP(../../../../../..)
+
+RTEMS_CANONICAL_TARGET_CPU
+AM_INIT_AUTOMAKE([no-define nostdinc foreign 1.12.2])
+RTEMS_BSP_CONFIGURE
+
+RTEMS_PROG_CC_FOR_TARGET
+RTEMS_CANONICALIZE_TOOLS
+RTEMS_PROG_CCAS
+
+RTEMS_BSPOPTS_SET([NS8250_CONSOLE_USE_INTERRUPTS],[*],[0])
+RTEMS_BSPOPTS_HELP([NS8250_CONSOLE_USE_INTERRUPTS],[Use interrupt driven mode for console devices])
+
+RTEMS_BSPOPTS_SET([MEMORY_SIZE],[*],[0x4000000])
+RTEMS_BSPOPTS_HELP([MEMORY_SIZE],[Set the amount of memory the application can
+use])
+
+RTEMS_BSPOPTS_SET([TEGRA_BASE],[*],[0x80000000])
+RTEMS_BSPOPTS_HELP([TEGRA_BASE],[Base load address])
+
+RTEMS_BSPOPTS_SET([BSP_START_IN_HYP_SUPPORT],[*],[1])
+RTEMS_BSPOPTS_HELP([BSP_START_IN_HYP_SUPPORT], [Support start of BSP in ARM HYP mode])
+AM_CONDITIONAL(BSP_START_IN_HYP_SUPPORT,test "$BSP_START_IN_HYP_SUPPORT" = "1")
+
+AC_DEFUN([TEGRA_LINKCMD],[
+AC_ARG_VAR([$1],[$2; default $3])dnl
+[$1]=[$]{[$1]:-[$3]}
+])
+
+TEGRA_LINKCMD([MEMORY_SIZE],[Begin of RAM region],[${MEMORY_SIZE}])
+TEGRA_LINKCMD([TEGRA_BASE],[Base load address],[${TEGRA_BASE}])
+
+AM_CONDITIONAL(HAS_SMP,[test "$rtems_cv_HAS_SMP" = "yes"])
+
+RTEMS_BSP_CLEANUP_OPTIONS(0, 0)
+
+AC_CONFIG_FILES([
+Makefile
+startup/linkcmds])
+AC_OUTPUT
