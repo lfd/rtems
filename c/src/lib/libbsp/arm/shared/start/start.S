@@ -26,6 +26,10 @@
 #include <bsp/irq.h>
 #include <bsp/linker-symbols.h>
 
+#ifdef BSP_START_WITH_CMDLINE
+#include <bsp/cmdline.h>
+#endif
+
 	/* External symbols */
 	.extern	bsp_reset
 	.extern	boot_card
@@ -356,8 +360,13 @@ bsp_vector_table_copy_done:
 	/* Branch to start hook 1 */
 	bl	bsp_start_hook_1
 
-	/* Branch to boot card */
-	mov	r0, #0
+#ifdef BSP_START_WITH_CMDLINE
+    ldr r0, bsp_cmdline_location
+#else
+    mov	r0, #0
+#endif
+
+  /* Branch to boot card */
 	bl	boot_card
 
 twiddle:
@@ -366,6 +375,11 @@ twiddle:
 	bl	bsp_reset
 
 	b	twiddle
+
+#ifdef BSP_START_WITH_CMDLINE
+    bsp_cmdline_location:
+      .word BSP_CMDLINE_LOCATION
+#endif
 
 #elif defined(ARM_MULTILIB_ARCH_V7M)
 

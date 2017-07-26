@@ -40,6 +40,9 @@ include_bsp_HEADERS += ../shared/armv467ar-basic-cache/cache_.h
 
 include_bsp_HEADERS += include/car.h
 include_bsp_HEADERS += include/console.h
+if BSP_START_WITH_CMDLINE
+include_bsp_HEADERS += include/cmdline.h
+endif
 include_bsp_HEADERS += include/irq.h
 include_bsp_HEADERS += include/memory.h
 include_bsp_HEADERS += include/mmu.h
@@ -125,6 +128,9 @@ libbsp_a_SOURCES += startup/mm_config_table.c
 libbsp_a_SOURCES += ../shared/mminit.c
 
 # misc
+if BSP_START_WITH_CMDLINE
+libbsp_a_SOURCES += misc/cmdline.c
+endif
 libbsp_a_SOURCES += misc/timer.c
 
 ###############################################################################

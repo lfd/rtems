@@ -10,6 +10,7 @@
 #include <bsp.h>
 #include <bspopts.h>
 #include <bsp/car.h>
+#include <bsp/cmdline.h>
 #include <bsp/console.h>
 #include <bsp/arm-cp15-start.h>
 
@@ -26,6 +27,10 @@ BSP_START_DATA_SECTION const arm_cp15_start_section_config
 arm_cp15_start_mmu_config_table[] = {
   ARMV7_CP15_START_DEFAULT_SECTIONS,
   {
+    .begin = (uint32_t) BSP_CMDLINE_LOCATION,
+    .end = (uint32_t) BSP_CMDLINE_LOCATION + 0x4000,
+    .flags = ARMV7_MMU_DATA_READ_WRITE_CACHED
+  }, {
     .begin = (uint32_t) CAR,
     .end = (uint32_t) (CAR + 0x1000),
     .flags = ARMV7_MMU_DEVICE

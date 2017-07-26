@@ -1,7 +1,9 @@
 bsp_mmu_size = 16k;
+bsp_cmdline_size = 16k;
 
 MEMORY {
-  RAM         (AIW) : ORIGIN = @TEGRA_BASE@, LENGTH = @MEMORY_SIZE@ - bsp_mmu_size
+  RAM         (AIW) : ORIGIN = @TEGRA_BASE@, LENGTH = @MEMORY_SIZE@ - bsp_mmu_size - bsp_cmdline_size
+  CMD         (AR)  : ORIGIN = @TEGRA_BASE@ + @MEMORY_SIZE@ - bsp_mmu_size - bsp_cmdline_size, LENGTH = bsp_cmdline_size
   RAM_MMU     (AIW) : ORIGIN = @TEGRA_BASE@ + @MEMORY_SIZE@ - bsp_mmu_size, LENGTH = bsp_mmu_size
 }
 
