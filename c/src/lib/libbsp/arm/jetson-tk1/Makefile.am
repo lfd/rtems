@@ -46,6 +46,7 @@ endif
 include_bsp_HEADERS += include/irq.h
 include_bsp_HEADERS += include/memory.h
 include_bsp_HEADERS += include/mmu.h
+include_bsp_HEADERS += include/tegra124-gpio.h
 
 ###############################################################################
 # Data                                                       #
@@ -110,6 +111,10 @@ libbsp_a_SOURCES += ../../shared/src/irq-info.c
 libbsp_a_SOURCES += ../../shared/src/irq-legacy.c
 libbsp_a_SOURCES += ../../shared/src/irq-server.c
 libbsp_a_SOURCES += ../../shared/src/irq-shell.c
+
+# GPIO
+libbsp_a_SOURCES += ../../shared/gpio.c
+libbsp_a_SOURCES += gpio/tegra124-gpio.c
 
 # Restart
 libbsp_a_SOURCES += startup/bspreset.c
