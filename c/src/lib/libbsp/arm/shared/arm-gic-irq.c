@@ -16,6 +16,10 @@
 
 #include <rtems/score/armv4.h>
 
+#ifdef BSP_START_WITH_CMDLINE
+#include <bsp/cmdline.h>
+#endif
+
 #include <libcpu/arm-cp15.h>
 
 #include <bsp/irq.h>
@@ -78,6 +82,13 @@ rtems_status_code bsp_interrupt_facility_initialize(void)
   volatile gic_dist *dist = ARM_GIC_DIST;
   uint32_t id_count = get_id_count(dist);
   uint32_t id;
+  uint8_t boot_cpu;
+
+#ifdef BSP_START_WITH_CMDLINE
+  boot_cpu = bsp_get_boot_cpu();
+#else
+  boot_cpu = 0x1;
+#endif
 
   arm_cp15_set_exception_handler(
     ARM_EXCEPTION_IRQ,
@@ -89,7 +100,7 @@ rtems_status_code bsp_interrupt_facility_initialize(void)
   }
 
   for (id = 32; id < id_count; ++id) {
-    gic_id_set_targets(dist, id, 0x01);
+    gic_id_set_targets(dist, id, 1 << boot_cpu);
   }
 
   cpuif->iccpmr = GIC_CPUIF_ICCPMR_PRIORITY(0xff);

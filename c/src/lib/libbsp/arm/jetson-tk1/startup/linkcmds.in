@@ -1,5 +1,5 @@
-bsp_mmu_size = 16k;
-bsp_cmdline_size = 16k;
+bsp_mmu_size = DEFINED (bsp_mmu_size) ? bsp_mmu_size : 16k;
+bsp_cmdline_size = DEFINED (bsp_cmdline_size) ? bsp_cmdline_size : 16k;
 
 MEMORY {
   RAM         (AIW) : ORIGIN = @TEGRA_BASE@, LENGTH = @MEMORY_SIZE@ - bsp_mmu_size - bsp_cmdline_size
