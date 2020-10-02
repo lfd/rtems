@@ -16,6 +16,31 @@
 
 const char rtems_test_name[] = "HELLO WORLD";
 
+uint32_t memory;
+
+static inline void mfence(void)
+{
+        asm volatile("mfence" ::: "memory");
+}
+
+static inline void lfence(void)
+{
+        asm volatile("lfence" ::: "memory");
+}
+
+static inline void clflush(void *addr)
+{
+	asm volatile("clflush %0" : "+m" (*(char *)addr));
+}
+
+static inline uint64_t rdtsc(void)
+{
+	uint32_t lo, hi;
+
+	asm volatile("rdtsc" : "=a" (lo), "=d" (hi));
+	return (uint64_t)lo | (((uint64_t)hi) << 32);
+}
+
 static rtems_task Init(
   rtems_task_argument ignored
 )
@@ -23,6 +48,25 @@ static rtems_task Init(
   rtems_print_printer_fprintf_putc(&rtems_test_printer);
   TEST_BEGIN();
   printf( "Hello World\n" );
+
+unsigned long long before, after;
+register uint32_t buffer;
+for (;;){
+  mfence();
+  //clflush(&memory);
+
+  before = rdtsc();
+  lfence();
+  buffer = memory;
+  lfence();
+  after = rdtsc();
+  lfence();
+
+  printf("mem: %x - delta: %llu\n", buffer, after - before);
+}
+
+
+
   TEST_END();
   rtems_test_exit( 0 );
 }
