@@ -62,7 +62,7 @@ void paging_init(void);
 
 #define PAGE_FLAGS_DEFAULTS                                              \
   (PAGE_FLAGS_PRESENT | PAGE_FLAGS_WRITABLE | PAGE_FLAGS_USER_ACCESSIBLE \
-   | PAGE_FLAGS_WRITE_THROUGH | PAGE_FLAGS_NO_CACHE | PAGE_FLAGS_GLOBAL)
+   | PAGE_FLAGS_WRITE_THROUGH | PAGE_FLAGS_GLOBAL)
 
 #endif /* !ASM */
 #endif

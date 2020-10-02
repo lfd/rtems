@@ -32,5 +32,5 @@
 void bsp_start(void)
 {
   paging_init();
-  bsp_interrupt_initialize();
+  //bsp_interrupt_initialize();
 }

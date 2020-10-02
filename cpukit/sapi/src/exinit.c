@@ -131,6 +131,7 @@ void rtems_initialize_executive(void)
     //printk("Loading %p\n", *item->handler);
     ( *item->handler )();
   }
+#ifndef __x86_64__
   int err;
   err = init_paging();
   if (err) {
@@ -139,6 +140,7 @@ void rtems_initialize_executive(void)
   }
   printk("paging: %d\n", !!_CPU_is_paging_enabled());
   printk("cache: %d\n", !!_CPU_is_cache_enabled());
+#endif
 
   _System_state_Set( SYSTEM_STATE_UP );
 
