@@ -203,6 +203,8 @@ rtems_isr Clock_isr(
 
 void _Clock_Initialize( void )
 {
+  // TBD: Clock driver
+  return;
   Clock_driver_ticks = 0;
 
   /*

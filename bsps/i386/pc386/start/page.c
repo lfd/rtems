@@ -24,7 +24,7 @@
 #include <rtems/score/cpu.h>
 #include <libcpu/page.h>
 
-#define MEMORY_SIZE 0x4000000 		/* 64Mo */
+#define MEMORY_SIZE (8*0x4000000) 		/* 512Mo */
 
 static int directoryEntry=0;
 static int tableEntry=0;

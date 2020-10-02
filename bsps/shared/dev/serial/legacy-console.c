@@ -127,7 +127,8 @@ void console_register_devices(
   /*
    * Initialize the console data elements
    */
-  console_initialize_data();
+  /* Required if !VGA */
+  //console_initialize_data();
 
   /*
    *  console_initialize() has been invoked so it is now too late to

@@ -85,6 +85,8 @@ int
 elcr_probe(void)
 {
 	int i;
+	elcr_found = 0;
+	return (ENXIO);
 
 	elcr_status = inb(ELCR_PORT) | inb(ELCR_PORT + 1) << 8;
 	if ((elcr_status & (ELCR_MASK(0) | ELCR_MASK(1) | ELCR_MASK(2) |

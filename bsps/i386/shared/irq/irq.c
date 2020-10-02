@@ -172,6 +172,7 @@ static int BSP_irq_enable_at_i8259a(const rtems_irq_number irqLine)
   mask = 1 << irqLine;
   i8259a_imr_cache &= ~mask;
 
+#if 0 /* JH */
   if (irqLine < 8)
   {
     isr = BSP_i8259a_irq_in_service_reg(PIC_MASTER_COMMAND_IO_PORT);
@@ -184,6 +185,7 @@ static int BSP_irq_enable_at_i8259a(const rtems_irq_number irqLine)
     irr = BSP_i8259a_irq_int_request_reg(PIC_SLAVE_COMMAND_IO_PORT);
     BSP_i8259a_irq_update_slave_imr();
   }
+#endif
 
   if (((isr ^ irr) & mask) != 0)
     printk("i386: isr=%x irr=%x\n", isr, irr);

@@ -118,14 +118,27 @@ RTEMS_SYSINIT_ITEM(
   RTEMS_SYSINIT_ORDER_MIDDLE
 );
 
+int _CPU_is_paging_enabled(void);
+int _CPU_is_cache_enabled(void);
+int init_paging(void);
+
 void rtems_initialize_executive(void)
 {
   const rtems_sysinit_item *item;
 
   /* Invoke the registered system initialization handlers */
   RTEMS_LINKER_SET_FOREACH( _Sysinit, item ) {
+    //printk("Loading %p\n", *item->handler);
     ( *item->handler )();
   }
+  int err;
+  err = init_paging();
+  if (err) {
+    printk("err init paging\n");
+    for(;;);
+  }
+  printk("paging: %d\n", !!_CPU_is_paging_enabled());
+  printk("cache: %d\n", !!_CPU_is_cache_enabled());
 
   _System_state_Set( SYSTEM_STATE_UP );
 

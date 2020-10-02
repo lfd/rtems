@@ -47,6 +47,9 @@ static uintptr_t rtemsWorkAreaStart;
  */
 uint32_t bsp_mem_size = 0;
 
+#define JAILHOUSE_MAX_MEM_MIB 511
+//#define BSP_GET_WORK_AREA_DEBUG 1
+
 static void bsp_size_memory(void)
 {
   uintptr_t topAddr;
@@ -86,13 +89,15 @@ static void bsp_size_memory(void)
     lowest = ((rtemsWorkAreaStart + (1<<20)) >> 20) + 1;
     if ( lowest  < 2 )
       lowest = 2;
+    //printk("Found lowest MiB: %u\n", lowest);
+    //printk("Probing memory from highest MiB %u\n", JAILHOUSE_MAX_MEM_MIB);
 
-    for (i=2048; i>=lowest; i--) {
+    for (i=JAILHOUSE_MAX_MEM_MIB; i>=lowest; i--) {
       topAddr = i*1024*1024 - 4;
       *(volatile uint32_t*)topAddr = topAddr;
     }
 
-    for(i=lowest; i<=2048; i++) {
+    for(i=lowest; i<=JAILHOUSE_MAX_MEM_MIB; i++) {
       topAddr = i*1024*1024 - 4;
       val =  *(volatile uint32_t*)topAddr;
       if (val != topAddr) {

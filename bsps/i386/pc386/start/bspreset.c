@@ -14,5 +14,8 @@
 void bsp_reset(void)
 {
   /* shutdown and reboot */
-  outport_byte(0x64, 0xFE);        /* use keyboard controller */
+  //outport_byte(0x64, 0xFE);        /* use keyboard controller */
+  asm volatile("1:\t\n"
+	       "hlt\t\n"
+	       "jmp 1b\t\n");
 }

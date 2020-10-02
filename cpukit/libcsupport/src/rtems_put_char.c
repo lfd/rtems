@@ -31,8 +31,18 @@
 
 #include <rtems/bspIo.h>
 
+#if 0
+void hc_putc(char c);
+void hc_putc(char c)
+{
+	unsigned int result;
+	asm volatile("vmcall" : "=a"(result) : "a"(8), "D"(c) : "memory");
+}
+#endif
+
 void rtems_put_char( int c, void *arg )
 {
   (void) arg;
   rtems_putc( (char) c );
+  //hc_putc((char)c);
 }

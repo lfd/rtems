@@ -98,7 +98,8 @@ static void bsp_start_default( void )
   /*
    * init PCI Bios interface...
    */
-  bsp_pci_initialize_helper();
+  /* Jailhouse: no BIOS PCI */
+  // bsp_pci_initialize_helper();
 
   /*
    * Probe for legacy UARTs.
@@ -108,7 +109,7 @@ static void bsp_start_default( void )
   /*
    * Probe for UARTs on PCI.
    */
-  pci_uart_probe();
+  //pci_uart_probe();
 
   /*
    * Parse the GDB arguments and flag a serial port as not valid. This stops
@@ -127,11 +128,12 @@ static void bsp_start_default( void )
    */
   pc386_parse_console_arguments();
 
-  Clock_driver_install_handler();
+  //Clock_driver_install_handler();
 
 #if BSP_ENABLE_IDE
   bsp_ide_cmdline_init();
 #endif
+  printk("bsp_start done\n");
 } /* bsp_start_default */
 
 /*

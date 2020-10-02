@@ -41,7 +41,6 @@ void boot_card(
 )
 {
   ISR_Level bsp_isr_level;
-
   /*
    * Make sure interrupts are disabled.  Directly use the CPU port API to allow
    * tracing of the higher level interrupt disable/enable routines, e.g.

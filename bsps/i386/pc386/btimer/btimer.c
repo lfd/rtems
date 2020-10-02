@@ -359,6 +359,11 @@ Calibrate_loop_1ms(void)
   rtems_interrupt_level  level;
   int retries = 0;
 
+  /* Jailhouse HACK */
+  slowLoop1ms = 35;
+  fastLoop1ms = 17;
+  return;
+
   /*
    * This code is designed to run before interrupt management
    * is enabled and running it on multiple CPUs and or after

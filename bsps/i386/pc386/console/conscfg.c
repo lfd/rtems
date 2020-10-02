@@ -103,7 +103,7 @@ static console_tbl Legacy_Ports[] = {
     NULL,                                  /* pDeviceFlow */
     16,                                    /* ulMargin */
     8,                                     /* ulHysteresis */
-    (void *) 9600,         /* Baud Rate */ /* pDeviceParams */
+    (void *) 115200,         /* Baud Rate */ /* pDeviceParams */
     COM1_BASE_IO,                          /* ulCtrlPort1 */
     0x00000000,                            /* ulCtrlPort2 */
     COM1_BASE_IO,                          /* ulDataPort */
@@ -114,6 +114,7 @@ static console_tbl Legacy_Ports[] = {
     CLOCK_RATE,                            /* ulClock */
     BSP_UART_COM1_IRQ                      /* ulIntVector -- base for port */
   },
+#if 0 /* Jailhouse */
   {
     "/dev/com2",                           /* sDeviceName */
     SERIAL_NS16550,                        /* deviceType */
@@ -171,6 +172,7 @@ static console_tbl Legacy_Ports[] = {
     CLOCK_RATE,                            /* ulClock */
     BSP_UART_COM4_IRQ                      /* ulIntVector -- base for port */
   },
+#endif /* Jailhouse */
 #endif
 };
 
@@ -189,7 +191,7 @@ void legacy_uart_probe(void)
     printk( "COM1-COM4: disabled\n" );
   } else {
     if (Legacy_Port_Count) {
-      printk("Legacy UART Ports: COM1-COM4\n");
+      //printk("Legacy UART Ports: COM1\n");
       console_register_devices( Legacy_Ports, Legacy_Port_Count );
     }
   }
