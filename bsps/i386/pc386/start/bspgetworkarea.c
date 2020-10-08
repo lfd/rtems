@@ -47,7 +47,7 @@ static uintptr_t rtemsWorkAreaStart;
  */
 uint32_t bsp_mem_size = 0;
 
-#define JAILHOUSE_MAX_MEM_MIB 511
+#define JAILHOUSE_MAX_MEM_MIB 1023
 //#define BSP_GET_WORK_AREA_DEBUG 1
 
 static void bsp_size_memory(void)
